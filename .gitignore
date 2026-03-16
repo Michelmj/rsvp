@@ -1,25 +1,5 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-
-# Django
-db.sqlite3
-*.log
-media/
-
-# Virtual environment
-venv/
-env/
-
-# Static build files
-staticfiles/
-
-# Environment variables
 .env
-
-# macOS
-.DS_Store
-
-# VS Code
-.vscode/
+*.pyc
+__pycache__/
+media/
+db.sqlite3
