@@ -454,7 +454,6 @@ body {
 
   backface-visibility: visible;
   will-change: transform;
-  /*transform-style: preserve-3d;*/
 
   z-index: 6;
 }
@@ -463,18 +462,18 @@ body {
 
 .flap-text {
   position: absolute;
-  bottom: -10%; /* adjust as needed */
-  left: 50%; /* adjust as needed */
+  bottom: -10%;
+  left: 50%;
   transform-origin: center top;
 
-  font-family: cursive; /* adjust as needed */
-  font-size: 35px; /* adjust as needed */
-  font-weight: 600; /* adjust as needed */
+  font-family: cursive;
+  font-size: 35px;
+  font-weight: 600;
   color: #fff;
-  text-align: center; /* adjust as needed */
+  text-align: center;
 
-  pointer-events: none; /* text won't interfere with clicking the flap */
-  z-index: 4; /* ensure it's above the flap */
+  pointer-events: none;
+  z-index: 4;
 
   opacity: 0; 
   visibility: hidden;
@@ -498,7 +497,7 @@ body {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
-  transition-delay: 4.7s; /* matches flap close timing */
+  transition-delay: 4.7s;
 }
 
 /* Envelope open and hides flap-text */
@@ -592,7 +591,7 @@ body.lock-scroll {
 }
 
 .deadline-text {
-    font-family: 'Georgia', serif; /* Or your preferred font */
+    font-family: 'Georgia', serif;
     font-size: 1.1rem;
     color: #f6f6f6;
     font-weight: bolder;
@@ -665,16 +664,16 @@ button {
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Allows clicking through petals to the RSVP form */
-    z-index: 9999; /* Keeps them above the envelope */
+    pointer-events: none;
+    z-index: 9999;
     overflow: hidden;
 }
 
 /* Individual Petal Style */
 .petal {
     position: absolute;
-    background-color: #ffc0cb; /* Soft Pink */
-    border-radius: 150% 0 150% 0; /* Petal Shape */
+    background-color: #ffc0cb;
+    border-radius: 150% 0 150% 0;
     opacity: 0.8;
     filter: blur(1px);
     animation: fall linear infinite;
@@ -690,4 +689,254 @@ button {
         transform: translateY(110vh) translateX(100px) rotate(720deg);
         opacity: 0;
     }
+}
+
+
+/* =============================================
+   RESPONSIVE STYLES
+   ============================================= */
+
+/* --- Tablet Portrait (768px and below) --- */
+@media (max-width: 768px) {
+  .container {
+    margin-top: 160px;
+    transform: scale(1.0);
+  }
+
+  .envelope-wrapper {
+    width: 360px;
+    height: 240px;
+    top: 340px;
+    left: calc(50% - 180px);
+  }
+
+  .envelope {
+    width: 360px;
+    height: 240px;
+  }
+
+  .envelope::after {
+    border-left-width: 180px;
+    border-right-width: 180px;
+    border-bottom-width: 75px;
+    border-top-width: 165px;
+  }
+
+  .flap {
+    height: 169px;
+  }
+
+  .invite-card {
+    width: 290px;
+    bottom: 59px;
+  }
+
+  .envelope-wrapper.flap .invite-card {
+    height: 420px;
+  }
+
+  .card-inner {
+    padding: 28px 20px;
+  }
+
+  .card-image img {
+    height: 120px;
+  }
+
+  .flap-text {
+    font-size: 24px;
+  }
+
+  .flap-curve-text {
+    width: 210px;
+  }
+
+  .wax-seal {
+    width: 60px;
+    height: 60px;
+    bottom: 57px;
+  }
+
+  .seal-mark {
+    font-size: 18px;
+  }
+
+  .envelope-back-standalone {
+    width: 360px;
+    height: 240px;
+  }
+
+  .back-text {
+    font-size: 20px;
+  }
+
+  .stage-envelope {
+    padding-top: 180px;
+  }
+
+  .rsvp {
+    padding: 50px 16px;
+    border-radius: 28px;
+    width: 85vw;
+    max-width: 420px;
+  }
+
+  .rsvp input,
+  .choices {
+    width: 85%;
+  }
+
+  .rsvp-question {
+    font-size: 17px;
+  }
+}
+
+/* --- Phone Landscape & Tablet Landscape (480px–767px) --- */
+@media (max-width: 767px) and (orientation: landscape) {
+  .container {
+    margin-top: 100px;
+    transform: scale(0.85);
+  }
+
+  .stage-envelope {
+    padding-top: 120px;
+  }
+
+  .stage-back,
+  .stage-rsvp {
+    padding-top: 35vh;
+  }
+
+  .rsvp {
+    width: 70vw;
+    padding: 40px 20px;
+  }
+
+  .rsvp input,
+  .choices {
+    width: 80%;
+  }
+}
+
+/* --- Phone Portrait (480px and below) --- */
+@media (max-width: 480px) {
+  .container {
+    margin-top: 100px;
+    transform: scale(0.72);
+  }
+
+  .envelope-wrapper {
+    width: 300px;
+    height: 200px;
+    top: 260px;
+    left: calc(50% - 150px);
+  }
+
+  .envelope {
+    width: 300px;
+    height: 200px;
+  }
+
+  .envelope::after {
+    border-left-width: 150px;
+    border-right-width: 150px;
+    border-bottom-width: 62px;
+    border-top-width: 138px;
+  }
+
+  .flap {
+    height: 141px;
+  }
+
+  .invite-card {
+    width: 240px;
+    bottom: 49px;
+  }
+
+  .envelope-wrapper.flap .invite-card {
+    height: 370px;
+  }
+
+  .card-inner {
+    padding: 20px 14px;
+  }
+
+  .card-image img {
+    height: 95px;
+  }
+
+  .flap-text {
+    font-size: 19px;
+  }
+
+  .flap-curve-text {
+    width: 170px;
+  }
+
+  .wax-seal {
+    width: 50px;
+    height: 50px;
+    bottom: 48px;
+  }
+
+  .seal-mark {
+    font-size: 14px;
+  }
+
+  .envelope-back-standalone {
+    width: 300px;
+    height: 200px;
+  }
+
+  .back-text {
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+
+  .stage-envelope {
+    padding-top: 140px;
+  }
+
+  .stage-back,
+  .stage-rsvp {
+    padding-top: 40vh;
+  }
+
+  .rsvp {
+    padding: 40px 12px;
+    border-radius: 22px;
+    width: 90vw;
+  }
+
+  .rsvp input,
+  .choices {
+    width: 90%;
+    font-size: 14px;
+  }
+
+  .rsvp-question {
+    font-size: 15px;
+  }
+
+  .deadline-text {
+    font-size: 0.9rem;
+  }
+
+  button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+/* --- Very small phones (360px and below) --- */
+@media (max-width: 360px) {
+  .container {
+    transform: scale(0.62);
+    margin-top: 70px;
+  }
+
+  .rsvp input,
+  .choices {
+    width: 95%;
+  }
 }
