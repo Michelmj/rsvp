@@ -74,12 +74,13 @@ body {
 .stage-back,
 .stage-rsvp {
   align-items: center;
-  padding-top: 50vh;
+  padding-top: clamp(60px, 10vw, 100px);
+  padding-bottom: clamp(60px, 10vw, 100px);
 }
 
 .stage-rsvp {
-  padding-top: 30vh;
-  padding-bottom: 20vh;
+  
+  padding-bottom: clamp(80px, 12vw, 120px);
 }
 
 .stage-back {
@@ -690,7 +691,7 @@ button {
 
   .stage-back,
   .stage-rsvp {
-    padding-top: 30vh;
+    
   }
 
   .rsvp {
