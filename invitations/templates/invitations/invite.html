@@ -1,684 +1,136 @@
-/* =============================================
-   ROOT VARIABLES
-   ============================================= */
-:root {
-  --primary: #fff;
-  --bg-color: rgb(50, 35, 62);
-  --bg-envelope-color: #f5edd1;
-  --envelope-tab: #c6e0f4;
-  --envelope-cover: #24314f;
-  --shadow-color: rgba(0, 0, 0, 0.2);
-  --txt-color: #444;
-  --seal-ocean: rgb(252, 8, 231);
-
-  /* Fluid envelope — scales with viewport, capped at 500px */
-  --env-w: min(500px, 90vw);
-  --env-h: calc(var(--env-w) * 0.668);
-  --env-half: calc(var(--env-w) / 2);
-  --flap-h: calc(var(--env-h) * 0.703);
-  --card-w: calc(var(--env-w) * 0.80);
-  --card-bottom: calc(var(--env-h) * 0.246);
-  --seal-size: clamp(44px, 10vw, 80px);
-  --seal-bottom: calc(var(--env-h) * 0.24);
-}
-
-/* =============================================
-   BASE RESET
-   ============================================= */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-html {
-  scrollbar-gutter: stable;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  background: #f3eee6;
-  overflow-y: scroll;
-}
-
-/* =============================================
-   CONTAINER
-   ============================================= */
-.container {
-  min-height: auto;
-  margin-top: clamp(20px, 5vw, 60px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* =============================================
-   STAGE LAYOUT
-   ============================================= */
-.stage {
-  min-height: 35vh;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.stage-envelope {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: clamp(40px, 8vw, 80px);
-  padding-bottom: clamp(40px, 8vw, 80px);
-  min-height: auto;
-  width: 100%;
-}
-
-.stage-back,
-.stage-rsvp {
-  align-items: center;
-  padding-top: 50vh;
-}
-
-.stage-rsvp {
-  padding-top: 30vh;
-  padding-bottom: 20vh;
-}
-
-.stage-back {
-  position: relative;
-  display: flex;
-  z-index: 1;
-}
-
-/* =============================================
-   ENVELOPE WRAPPER
-   ============================================= */
-.envelope-wrapper {
-  position: relative;
-  width: var(--env-w);
-  height: var(--env-h);
-  filter: drop-shadow(0 30px 45px rgba(0, 0, 0, 0.35));
-  perspective: 1200px;
-  transform-style: preserve-3d;
-  z-index: 10;
-  margin: 0 auto;
-}
-
-.envelope-wrapper::after {
-  content: "";
-  position: absolute;
-  bottom: -25px;
-  left: 50%;
-  width: 76%;
-  height: 40px;
-  background: radial-gradient(ellipse, rgba(0,0,0,0.35), transparent 70%);
-  transform: translateX(-50%);
-}
-
-/* =============================================
-   ENVELOPE BODY
-   ============================================= */
-.envelope {
-  position: absolute;
-  width: var(--env-w);
-  height: var(--env-h);
-  overflow: visible;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,0.35), rgba(0,0,0,0.05)),
-    repeating-linear-gradient(
-      45deg,
-      rgba(255,255,255,0.04) 0px,
-      rgba(255,255,255,0.04) 1px,
-      transparent 1px,
-      transparent 3px
-    ),
-    var(--bg-envelope-color);
-  border-radius: 6px;
-}
-
-.envelope::after {
-  content: ' ';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
-  width: 0;
-  height: 0;
-  border-left: var(--env-half) solid var(--envelope-cover);
-  border-right: var(--env-half) solid var(--envelope-cover);
-  border-bottom: calc(var(--env-h) * 0.311) solid var(--envelope-cover);
-  border-top: calc(var(--env-h) * 0.689) solid transparent;
-  filter: drop-shadow(0 -6px 8px rgba(0, 0, 0, 0.35));
-}
-
-.envelope-front-shape {
-  position: absolute;
-  inset: 0;
-  clip-path: polygon(40% 50%, 60% 50%, 100% 100%, 0 100%);
-  background:
-    linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(0,0,0,0.18)),
-    var(--envelope-cover);
-  transform: translateZ(2px);
-  box-shadow:
-    0 2px 3px rgba(0,0,0,0.45),
-    0 -1px 0 rgba(255,255,255,0.25);
-  z-index: 4;
-}
-
-/* =============================================
-   ENVELOPE INSIDE
-   ============================================= */
-.envelope-inside {
-  position: absolute;
-  inset: 1px;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,0.18), rgba(255,255,255,0.05)),
-    #c73a52;
-  box-shadow:
-    inset 0 20px 30px rgba(0,0,0,0.08),
-    inset 0 25px 35px rgba(0,0,0,0.35),
-    inset 0 -10px 15px rgba(255,255,255,0.15);
-  z-index: 1;
-  opacity: 0;
-  transform: translateZ(2px);
-  transition: opacity 0.6s ease 2s;
-  backface-visibility: hidden;
-}
-
-.envelope-wrapper.flap .envelope-inside {
-  opacity: 1;
-  transition-delay: 0s;
-}
-
-.envelope-wrapper:not(.flap) .envelope-inside {
-  opacity: 1;
-}
-
-/* =============================================
-   INVITATION CARD
-   ============================================= */
-.invite-card {
-  position: absolute;
-  bottom: var(--card-bottom);
-  left: 50%;
-  margin-left: calc(var(--card-w) / -2);
-  width: var(--card-w);
-  height: 0px;
-  background: #fff;
-  border-radius: 6px;
-  transform: translateY(50px);
-  transition: height 1.5s ease-in-out 2.6s, transform 1.5s ease-in-out 2.6s;
-  box-shadow:
-    0 20px 40px rgba(0,0,0,0.25),
-    inset 0 0 0 1px rgba(0,0,0,0.08);
-  z-index: 8;
-}
-
-.envelope-wrapper.flap .invite-card {
-  transform: translateY(2%);
-  height: clamp(280px, 80vw, 530px);
-  overflow: hidden;
-}
-
-.envelope-wrapper:not(.flap) .invite-card {
-  transform: translateY(2%);
-  overflow-y: hidden;
-}
-
-.card-inner {
-  position: relative;
-  padding: clamp(14px, 3.5vw, 40px) clamp(10px, 2.5vw, 32px);
-  text-align: center;
-  color: #24314f;
-  font-family: "Playfair Display", cursive;
-  transition: opacity 1.5s ease-in;
-  opacity: 0;
-}
-
-.card-inner.text-visible {
-  opacity: 1;
-}
-
-.card-title {
-  font-family: 'Cormorant Garamond', cursive;
-  font-size: clamp(8px, 1.8vw, 13px);
-  letter-spacing: 5px;
-  color: var(--burgundy);
-  margin-bottom: clamp(8px, 2vw, 18px);
-  font-weight: 600;
-}
-
-.card-image {
-  width: 100%;
-  margin-bottom: clamp(10px, 2.5vw, 26px);
-}
-
-.card-image img {
-  width: 100%;
-  max-width: 320px;
-  height: clamp(70px, 16vw, 160px);
-  object-fit: cover;
-  display: block;
-  margin: 0 auto;
-  border-radius: 6px;
-}
-
-.card-name {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(16px, 5vw, 30px);
-  color: var(--env-navy);
-  margin-bottom: clamp(4px, 1vw, 10px);
-  line-height: 1.1;
-}
-
-.card-divider {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: clamp(4px, 1.2vw, 12px) auto;
-  width: 55%;
-  max-width: 200px;
-}
-
-.card-divider::before,
-.card-divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-
-.card-divider-icon {
-  font-size: clamp(10px, 1.8vw, 15px);
-}
-
-.card-date {
-  font-size: clamp(10px, 2.6vw, 19px);
-  font-weight: 600;
-  color: var(--env-navy);
-  margin-top: clamp(4px, 1vw, 9px);
-  letter-spacing: 1px;
-}
-
-.card-location {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(7px, 1.8vw, 13px);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-top: clamp(2px, 0.8vw, 7px);
-  color: var(--env-navy);
-  opacity: 0.6;
-}
-
-/* =============================================
-   COUNTDOWN
-   ============================================= */
-.card-countdown {
-  display: flex;
-  justify-content: center;
-  gap: clamp(6px, 1.8vw, 18px);
-  margin-top: clamp(10px, 2vw, 18px);
-  padding-top: clamp(8px, 1.6vw, 14px);
-  border-top: 1px solid rgba(201,168,76,0.25);
-}
-
-.countdown-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-.countdown-num {
-  font-size: clamp(14px, 3.5vw, 28px);
-  font-weight: 700;
-  color: var(--burgundy);
-  line-height: 1;
-}
-
-.countdown-label {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(6px, 1.2vw, 9px);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--env-navy);
-  opacity: 0.5;
-}
-
-.countdown-sep {
-  font-size: clamp(12px, 2.8vw, 22px);
-  color: var(--gold);
-  opacity: 0.5;
-  align-self: flex-start;
-  margin-top: 2px;
-}
-
-/* =============================================
-   BACK OF ENVELOPE
-   ============================================= */
-.envelope-back-standalone {
-  width: var(--env-w);
-  height: var(--env-h);
-  background: #c6e0f4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow:
-    0 30px 60px rgba(0,0,0,0.35),
-    inset 0 0 0 1px rgba(0,0,0,0.12);
-  border-radius: 4px;
-}
-
-.back-text {
-  font-size: clamp(13px, 4vw, 28px);
-  font-family: cursive;
-  font-weight: 600;
-  color: #800020;
-  letter-spacing: 2px;
-  text-align: center;
-  padding: 0 16px;
-}
-
-/* =============================================
-   WAX SEAL
-   ============================================= */
-.wax-seal {
-  position: absolute;
-  bottom: var(--seal-bottom);
-  left: 50%;
-  transform: translateX(-50%);
-  width: var(--seal-size);
-  height: var(--seal-size);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 50%,
-    #f3e6cf 1%,
-    #8b5a2b 10%,
-    #c79b2e 5%,
-    #5a3a1e 70%);
-  box-shadow:
-    inset -4px -6px 10px rgba(0,0,0,0.3),
-    inset 3px 3px 6px rgba(255,255,255,0.2),
-    0 6px 15px rgba(0,0,0,0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 7;
-}
-
-.wax-seal::before {
-  content: "";
-  position: relative;
-  inset: -4px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
-  filter: blur(2px);
-}
-
-.seal-mark {
-  font-family: cursive;
-  font-size: clamp(11px, 3.5vw, 24px);
-  font-weight: 600;
-  color: #f3e6cf;
-  letter-spacing: 2px;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.25);
-}
-
-.wax-seal.break {
-  animation: waxBreak 1.6s ease forwards;
-}
-
-@keyframes waxBreak {
-  0%   { transform: translateX(-50%) scale(1); }
-  40%  { transform: translateX(-50%) scale(1.1) rotate(3deg); }
-  100% { transform: translateX(-50%) scale(0) rotate(-10deg); opacity: 0; }
-}
-
-/* =============================================
-   FLAP
-   ============================================= */
-.flap {
-  position: absolute;
-  width: 100%;
-  height: var(--flap-h);
-  transform-origin: top center;
-  transform: rotateX(0deg) translateZ(1px);
-  transition: transform 2.6s ease-in-out;
-  backface-visibility: visible;
-  will-change: transform;
-  z-index: 6;
-}
-
-.flap-text {
-  position: absolute;
-  bottom: -10%;
-  left: 50%;
-  transform-origin: center top;
-  font-family: cursive;
-  font-size: clamp(16px, 5vw, 35px);
-  font-weight: 600;
-  color: #fff;
-  text-align: center;
-  pointer-events: none;
-  z-index: 4;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(-50%) translateY(-12px);
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease,
-    visibility 0s linear 0.4s;
-}
-
-.flap-curve-text {
-  display: block;
-  width: clamp(140px, 45vw, 300px);
-  margin: 0 auto;
-}
-
-.envelope-wrapper:not(.flap) .flap-text {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-  transition-delay: 4.7s;
-}
-
-.envelope-wrapper.flap .flap-text {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(-50%) translateY(-12px);
-  transition-delay: 0s;
-}
-
-.flap-front {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(0,0,0,0.2)),
-    var(--envelope-tab);
-  box-shadow:
-    inset 0 -6px 10px rgba(0,0,0,0.25),
-    0 6px 12px rgba(0,0,0,0.25);
-  clip-path: polygon(0 0%, 100% 0, 50% 100%);
-  backface-visibility: hidden;
-}
-
-.flap-front::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: rgba(0,0,0,0.25);
-  filter: blur(1px);
-}
-
-.flap-back {
-  position: absolute;
-  transform: rotateX(180deg);
-}
-
-.flap-inside {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  backface-visibility: hidden;
-}
-
-.envelope-wrapper.flap .flap {
-  transform: rotateX(-180deg) translateZ(1px);
-  z-index: 1;
-  transition: transform 2.6s ease-in-out, z-index 0s 1.3s;
-}
-
-.envelope-wrapper:not(.flap) .flap {
-  transform: rotateX(0deg);
-  transition: transform 2.6s ease-in-out, z-index 0s 3.5s;
-  transition-delay: 3.4s;
-}
-
-/* =============================================
-   SCROLL LOCK
-   ============================================= */
-body.lock-scroll {
-  overflow: hidden;
-}
-
-/* =============================================
-   RSVP SECTION
-   ============================================= */
-.message-box {
-  margin-bottom: 20px;
-}
-
-.error-message {
-  background: #800020;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  font-size: clamp(12px, 2.5vw, 14px);
-}
-
-.deadline-text {
-  font-family: 'Georgia', serif;
-  font-size: clamp(0.8rem, 2.5vw, 1.1rem);
-  color: #f6f6f6;
-  font-weight: bolder;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  font-style: italic;
-  letter-spacing: 1px;
-}
-
-.rsvp {
-  padding: clamp(32px, 7vw, 80px) clamp(10px, 4vw, 40px);
-  background: #32233e;
-  text-align: center;
-  color: white;
-  border-radius: clamp(18px, 5vw, 40px);
-  opacity: 0;
-  transform: translateY(60px);
-  transition: all 0.8s ease;
-  width: clamp(260px, 88vw, 480px);
-}
-
-.rsvp-question {
-  font-size: clamp(14px, 3.5vw, 20px);
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-  opacity: 0.9;
-}
-
-.rsvp.show {
-  opacity: 1;
-  transform: translateY(10px);
-}
-
-.rsvp form {
-  max-width: 400px;
-  margin: auto;
-}
-
-.rsvp input,
-.choices {
-  width: min(75%, 300px);
-  padding: clamp(8px, 2vw, 12px);
-  margin: 8px 0;
-  border-radius: 6px;
-  border: none;
-  font-size: clamp(13px, 2.5vw, 16px);
-}
-
-button {
-  padding: clamp(10px, 2.5vw, 14px) clamp(18px, 5vw, 30px);
-  border: none;
-  background: #800020;
-  color: white;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: clamp(13px, 2.5vw, 16px);
-  margin-top: 8px;
-}
-
-/* =============================================
-   PETALS
-   ============================================= */
-#petal-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  overflow: hidden;
-}
-
-.petal {
-  position: absolute;
-  background-color: #ffc0cb;
-  border-radius: 150% 0 150% 0;
-  opacity: 0.8;
-  filter: blur(1px);
-  animation: fall linear infinite;
-}
-
-@keyframes fall {
-  0% {
-    transform: translateY(-10vh) translateX(0) rotate(0deg);
-    opacity: 0;
-  }
-  10% { opacity: 0.8; }
-  100% {
-    transform: translateY(110vh) translateX(100px) rotate(720deg);
-    opacity: 0;
-  }
-}
-
-/* =============================================
-   LANDSCAPE PHONES (short screens)
-   ============================================= */
-@media (max-height: 500px) and (orientation: landscape) {
-  .stage-envelope {
-    padding-top: clamp(20px, 5vh, 40px);
-    padding-bottom: clamp(20px, 5vh, 40px);
-  }
-
-  .stage-back,
-  .stage-rsvp {
-    padding-top: 30vh;
-  }
-
-  .rsvp {
-    width: min(65vw, 480px);
-  }
-
-  .rsvp input,
-  .choices {
-    width: 78%;
-  }
-}
+{% load static %}
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Mario & Sephora </title>
+  <link rel="stylesheet" href="{% static 'invitations/css/style1.css' %}">
+</head>
+<body>
+
+ <div class="container">  
+
+    <!-- PHASE 0: ENVELOPE INTRO -->
+
+    <div class="stage stage-envelope">
+      <div class="envelope-wrapper">
+        <div class="floral florals-left"></div>
+        <div class="floral florals-right"></div>
+        
+        <div class="envelope">
+
+          <div class="envelope-front-shape"></div>
+          <div class="envelope-front-bottom"></div>
+
+          <div class="flap">
+            <div class="flap-front">
+              <div class="flap-text countdown">
+                The Countdown Begins
+                <svg class="flap-curve-text countdown" viewBox="0 0 300 120">
+                  <path id="flapPath" d="M 30 90 Q 150 20 270 90" fill="transparent"/>
+                  <text>
+                    <textPath href="#flapPath" startOffset="50%" text-anchor="middle">
+                    </textPath>
+                  </text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="flap-back"></div>
+          </div>
+  
+
+         <!-- <div class="flap-image"></div> -->
+
+          <div class="envelope-front"></div>
+
+          <div class="envelope-inside">
+            <div class="invite-card">
+              <div class="card-inner">
+                <div class="card-title"> SAVE the DATE </div>
+                <div class="card-image">
+                  <img src="{% static 'invitations/images/Tuckahoe_Boat.jpg' %}" alt="Venue">
+                </div>
+                <div class="card-name"> Sephora & Mario </div>
+                <div class="card-divider"> * </div>
+                <div class="card-date"> 12 November, 2026 </div>
+                <div class="card-location"> Jensen Beach, Florida </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- Insert Images -->
+          <!--<div class="image01">
+            <img src="Tuckahoe_back.jpg"> 
+          </div> -->
+
+        <!-- Create Wax-Seal -->
+
+          <div class="wax-seal"> <!-- This is the seal on top of the flap -->
+            <span class="seal-mark"> S&M </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2: BACK OF ENVELOPE -->
+    <div class="stage stage-back">
+      <div class="envelope-back-standalone">
+        <p class="back-text">Formal Invitation to Follow</p>
+      </div>
+    </div>
+
+     <!-- PHASE 3: RSVP CARD -->
+    <div class="stage stage-rsvp">
+      <section class="rsvp">
+        
+        {% if messages %}
+          <div class = "message-box">
+            {% for message in messages %}
+              <p class="error-message">{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+ 
+        <h3> SOFT RSVP </h3>
+        <p> Help Us Plan Ahead </p>
+        <p class="rsvp-question"> Will you attend?</p>
+
+          {% if messages %}
+          <div class = "message-box">
+            {% for message in messages %}
+              <p style="color: red; text-align: center:">
+                {{ message }}
+              </p>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <form method="POST" action = "{% url "invited" %}">
+          {% csrf_token %}
+
+          <input type="text" name="name" placeholder="Full Name" required>
+          <input type "text" id="name" name = "spouse_name" placeholder="Spouse's name">
+          <input type="email" name="email" placeholder="Email Address" required>
+          <input type="text" name="number" placeholder="Phone Number">
+
+          <select class="choices" name="response" required>
+            <option value="" disabled selected >Select your response</option>
+            <option value="accepts">Joyfully Accepts</option>
+            <option value="declines">Regretfully Declines</option>
+          </select> 
+
+          <button type="submit">Send RSVP</button>
+        </form>
+      <p class="deadline-text"> Please submit by 15 June, 2026 </p>
+      </section>
+    
+
+    </div>  
+  </div>
+
+  <script src="{% static 'invitations/js/invite.js' %}"></script>
+
+</body>
+</html> 
