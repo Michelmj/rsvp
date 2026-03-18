@@ -466,10 +466,10 @@ body {
 
 .flap-text {
   position: absolute;
-  top: 18%;
+  top: 12%;
   left: 50%;
   transform: translateX(-50%) translateY(-12px);
-  width: 80%;
+  width: 60%;
   transform-origin: center top;
   font-family: cursive;
   font-size: clamp(16px, 4.5vw, 30px);
