@@ -64,11 +64,11 @@ body {
 .stage-envelope {
   position: relative;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  padding-top: clamp(220px, 40vw, 500px);
-  padding-bottom: clamp(60px, 10vw, 100px);
-  min-height: auto;
+  min-height: 100vh;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .stage-back,
@@ -708,15 +708,11 @@ button {
    ============================================= */
 @media (max-width: 600px) {
 
-  /* Flap text — scale down to fit and wrap on phone */
+  /* Flap text — scale down on phone */
   .flap-text {
-    font-size: 5.5vw;
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    width: 70%;
-    margin-left: -35%;
-    line-height: 1.35;
+    font-size: clamp(12px, 3.5vw, 20px);
+    white-space: nowrap;
+    letter-spacing: 1px;
   }
 
 
