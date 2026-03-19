@@ -12,7 +12,7 @@ def send_email(to_email, subject, body):
     try:
         sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
         message = Mail(
-            from_email='noreply@sendgrid.net',
+            from_email='seph.n.mario@gmail.com',
             to_emails=to_email,
             subject=subject,
             plain_text_content=body
