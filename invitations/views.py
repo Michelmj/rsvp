@@ -11,7 +11,7 @@ from sendgrid.helpers.mail import Mail
 def send_email(to_email, subject, body):
     sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
     message = Mail(
-        from_email=settings.DEFAULT_FROM_EMAIL,
+        from_email='noreply@sendgrid.net',
         to_emails=to_email,
         subject=subject,
         plain_text_content=body
