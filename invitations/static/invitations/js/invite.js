@@ -33,7 +33,7 @@ function openEnvelope() {
       }, 800);
 
     }, 1600);
-  }, 1600); // match waxbreak / flap timing
+  }, 1600);
 }
 
 function closeEnvelope() {
@@ -50,7 +50,7 @@ function closeEnvelope() {
   }
 }
 
-// Click to open (Only place this happens)
+// Click to open
 envelope.addEventListener('click', () => {
   if (envelope.classList.contains('flap')) {
     closeEnvelope();
@@ -59,13 +59,6 @@ envelope.addEventListener('click', () => {
   }
 });
 
-// Hide scroll indicator when user starts scrolling
-window.addEventListener('scroll', () => {
-  if (scrollIndicator && window.scrollY > 50) {
-    scrollIndicator.classList.remove('show');
-  }
-}, { passive: true });
-
 // INTERSECTION OBSERVER (feed-style reveal)
 const observer = new IntersectionObserver((entries) => {
   if (document.body.classList.contains('lock-scroll')) return;
@@ -73,8 +66,12 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
 
+    // Hide scroll indicator when RSVP section becomes visible
     if (entry.target.classList.contains('stage-rsvp')) {
       document.querySelector('.rsvp')?.classList.add('show');
+      if (scrollIndicator) {
+        scrollIndicator.classList.remove('show');
+      }
     }
   });
 }, { threshold: 0.3 });
@@ -90,23 +87,21 @@ function createPetals() {
   container.id = 'petal-container';
   document.body.appendChild(container);
 
-  const petalCount = 30; // Adjust for more/less petals
+  const petalCount = 30;
 
   for (let i = 0; i < petalCount; i++) {
     const petal = document.createElement('div');
     petal.className = 'petal';
 
-    // Randomize size, position, and speed
     const size = Math.random() * 15 + 10 + 'px';
     petal.style.width = size;
     petal.style.height = size;
     petal.style.left = Math.random() * 100 + 'vw';
-    petal.style.animationDuration = Math.random() * 5 + 5 + 's'; // 5-10 seconds
+    petal.style.animationDuration = Math.random() * 5 + 5 + 's';
     petal.style.animationDelay = Math.random() * 5 + 's';
 
     container.appendChild(petal);
   }
 }
 
-// Start the animation when the page loads
 window.addEventListener('load', createPetals);

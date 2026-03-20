@@ -815,12 +815,9 @@ button {
 
 /* =============================================
    CLICK TO OPEN HINT
+   — positioned right below the envelope
    ============================================= */
 .click-hint {
-  position: absolute;
-  bottom: clamp(20px, 5vw, 40px);
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -830,6 +827,7 @@ button {
   opacity: 1;
   visibility: visible;
   transition: opacity 0.5s ease, visibility 0s linear 0s;
+  margin-top: clamp(16px, 3vw, 28px);
 }
 
 .click-hint.hide {
@@ -865,10 +863,11 @@ button {
 
 /* =============================================
    SCROLL TO EXPLORE INDICATOR
+   — fixed at bottom of screen, stays until RSVP visible
    ============================================= */
 .scroll-indicator {
-  position: absolute;
-  bottom: clamp(20px, 5vw, 40px);
+  position: fixed;
+  bottom: clamp(20px, 4vh, 36px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -879,7 +878,7 @@ button {
   visibility: hidden;
   transition: opacity 0.8s ease, visibility 0s linear 0.8s;
   pointer-events: none;
-  z-index: 20;
+  z-index: 500;
 }
 
 .scroll-indicator.show {
@@ -908,4 +907,16 @@ button {
 @keyframes bounceDown {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(8px); }
+}
+
+/* =============================================
+   ENVELOPE STAGE INNER
+   — wraps envelope + click hint so hint sits
+     naturally right below the envelope
+   ============================================= */
+.envelope-stage-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
 }

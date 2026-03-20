@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> J & J </title>
+  <title> Mario & Sephora </title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
@@ -14,68 +14,60 @@
  <div class="container">  
 
     <!-- PHASE 0: ENVELOPE INTRO -->
-
     <div class="stage stage-envelope">
-      <div class="perspective-container">
-        <div class="envelope-wrapper">
-          <div class="floral florals-left"></div>
-          <div class="floral florals-right"></div>
-          
-          <div class="envelope">
+      <div class="envelope-stage-inner">
 
-            <div class="envelope-front-shape"></div>
-            <div class="envelope-front-bottom"></div>
+        <div class="perspective-container">
+          <div class="envelope-wrapper">
+            <div class="floral florals-left"></div>
+            <div class="floral florals-right"></div>
+            
+            <div class="envelope">
 
-            <div class="flap">
-              <div class="flap-front"></div>
-              <div class="flap-back"></div>
-              <div class="flap-text countdown">
-                The Countdown<br>Begins
-              </div>
-            </div>
+              <div class="envelope-front-shape"></div>
+              <div class="envelope-front-bottom"></div>
 
-            <div class="envelope-front"></div>
-
-            <div class="envelope-inside">
-              <div class="invite-card">
-                <div class="card-inner">
-                  <div class="card-title"> SAVE the DATE </div>
-                  <div class="card-image">
-                    <img src="{% static 'invitations/images/Tuckahoe_Boat.jpg' %}" alt="Venue">
-                  </div>
-                  <div class="card-name"> Sephora & Mario </div>
-                  <div class="card-divider"> * </div>
-                  <div class="card-date"> 12 November, 2026 </div>
-                  <div class="card-location"> Jensen Beach, Florida </div>
+              <div class="flap">
+                <div class="flap-front"></div>
+                <div class="flap-back"></div>
+                <div class="flap-text countdown">
+                  The Countdown<br>Begins
                 </div>
               </div>
-            </div>
 
-            <!-- Create Wax-Seal -->
-            <div class="wax-seal">
-              <span class="seal-mark"> S&M </span>
-            </div>
+              <div class="envelope-front"></div>
 
+              <div class="envelope-inside">
+                <div class="invite-card">
+                  <div class="card-inner">
+                    <div class="card-title"> SAVE the DATE </div>
+                    <div class="card-image">
+                      <img src="{% static 'invitations/images/Tuckahoe_Boat.jpg' %}" alt="Venue">
+                    </div>
+                    <div class="card-name"> Sephora & Mario </div>
+                    <div class="card-divider"> * </div>
+                    <div class="card-date"> 12 November, 2026 </div>
+                    <div class="card-location"> Jensen Beach, Florida </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Create Wax-Seal -->
+              <div class="wax-seal">
+                <span class="seal-mark"> S&M </span>
+              </div>
+
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- CLICK TO OPEN — visible before opening -->
-      <div class="click-hint" id="clickHint">
-        <span class="click-hint-text">Click to Open</span>
-        <span class="click-hint-icon">👆</span>
-      </div>
-
-      <!-- SCROLL TO EXPLORE — appears after opening -->
-      <div class="scroll-indicator" id="scrollIndicator">
-        <span class="scroll-text">Scroll to Explore</span>
-        <div class="scroll-arrow">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <!-- CLICK TO OPEN — sits right below envelope -->
+        <div class="click-hint" id="clickHint">
+          <span class="click-hint-text">Click to Open</span>
+          <span class="click-hint-icon">👆</span>
         </div>
-      </div>
 
+      </div>
     </div>
 
     <!-- PHASE 2: BACK OF ENVELOPE -->
@@ -121,6 +113,16 @@
       </section>
 
     </div>  
+  </div>
+
+  <!-- SCROLL TO EXPLORE — fixed at bottom, stays until RSVP visible -->
+  <div class="scroll-indicator" id="scrollIndicator">
+    <span class="scroll-text">Scroll to Explore</span>
+    <div class="scroll-arrow">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
   </div>
 
   <script src="{% static 'invitations/js/invite.js' %}"></script>
