@@ -4,21 +4,19 @@ from .models import rsvp
 from django.contrib import messages
 from django.db import IntegrityError
 import os
-import sendgrid
-from sendgrid.helpers.mail import Mail
+import resend
 from .services import append_to_google_sheet
 
 
 def send_email(to_email, subject, body):
     try:
-        sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
-        message = Mail(
-            from_email='seph.n.mario@gmail.com',
-            to_emails=to_email,
-            subject=subject,
-            plain_text_content=body
-        )
-        sg.send(message)
+        resend.api_key = os.environ.get('RESEND_API_KEY')
+        resend.Emails.send({
+            "from": "seph.n.mario@gmail.com",
+            "to": to_email,
+            "subject": subject,
+            "text": body
+        })
     except Exception as e:
         print(f"Email error: {e}")
 

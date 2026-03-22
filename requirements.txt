@@ -23,10 +23,12 @@ pyparsing==3.3.2
 python-http-client==3.3.7
 requests==2.32.5
 requests-oauthlib==2.0.0
+resend==2.26.0
 rsa==4.9.1
 sendgrid==6.12.5
 six==1.17.0
 sqlparse==0.5.5
+typing_extensions==4.15.0
 urllib3==2.6.3
 Werkzeug==3.1.6
 whitenoise==6.12.0
