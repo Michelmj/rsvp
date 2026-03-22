@@ -12,7 +12,7 @@ def send_email(to_email, subject, body):
     try:
         resend.api_key = os.environ.get('RESEND_API_KEY')
         resend.Emails.send({
-            "from": "seph.n.mario@gmail.com",
+            "from": "onboarding@resend.dev",
             "to": to_email,
             "subject": subject,
             "text": body
