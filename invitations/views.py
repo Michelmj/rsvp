@@ -39,6 +39,15 @@ def invited(request):
         number = request.POST.get('number')
         response = request.POST.get('response')
 
+        # Check database directly — not just session
+        if rsvp.objects.filter(email=email).exists():
+            messages.error(request, "An RSVP has already been submitted with this email address.")
+            return redirect('home')
+
+        if rsvp.objects.filter(number=number).exists():
+            messages.error(request, "An RSVP has already been submitted with this phone number.")
+            return redirect('home')
+
         try:
             rsvp.objects.create(
                 name=name,
@@ -47,7 +56,6 @@ def invited(request):
                 number=number,
                 response=response
             )
-
         except IntegrityError:
             messages.error(request, "An RSVP has already been submitted with this email address.")
             return redirect('home')
