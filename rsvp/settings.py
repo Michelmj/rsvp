@@ -31,7 +31,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
-    'rsvp-production-5456.up.railway.app',
+    'https://rsvp-production-5456.up.railway.app',
 ]
 #os.environ.get('ALLOWED_HOSTS', '').split(',')
 
