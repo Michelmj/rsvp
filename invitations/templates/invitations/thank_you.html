@@ -165,7 +165,7 @@
 
       <div class="divider"><span class="divider-icon">✦</span></div>
 
-      {% if accepted_guests %}
+      {% comment %} {% if accepted_guests %}
         <p class="guest-list-title">Joining the Celebration</p>
         <ul class="guest-list">
           {% for guest in accepted_guests %}
@@ -178,7 +178,7 @@
           {% endfor %}
         </ul>
         <p class="guest-count">{{ total_people }} person{{ total_people|pluralize }} attending so far</p>
-      {% endif %}
+      {% endif %} {% endcomment %}
 
       <a href="{% url 'home' %}" class="back-link">← Back to Invitation</a>
 
